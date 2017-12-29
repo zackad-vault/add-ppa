@@ -2,7 +2,8 @@
 if [ $# -eq 1 ]
 NM=`uname -a && date`
 NAME=`echo $NM | md5sum | cut -f1 -d" "`
-CODENAME=`lsb_release -c | sed 's/\s//g' | cut -d":" -f2`
+CODENAME=`lsb_release -c | sed 's/\s//g' | cut -d":" -f2` \
+	| sed 's/wheezy/precise/g; s/jessie/trusty/g; s/stretch/xenial/g'
 then
 	ppa_name=`echo "$1" | cut -d":" -f2 -s`
 	list_name=`echo $ppa_name | sed 's/\//-/g'`
