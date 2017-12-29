@@ -13,6 +13,11 @@ then
 		echo "$0 ppa:user/ppa-name"
 	else
 		echo "adding ppa:$ppa_name into repository list"
+		if grep -q "deb .*$ppa_name" /etc/apt/sources.list /etc/apt/sources.list.d/*;
+		then
+			echo "canceling, ppa already exists";
+			exit 0;
+		fi
 		echo "deb http://ppa.launchpad.net/$ppa_name/ubuntu $CODENAME main" >> /etc/apt/sources.list.d/"$list_name.list"
 		echo "updating repository list ..."
 		apt-get update >> /dev/null 2> /tmp/${NAME}_apt_add_key.txt
