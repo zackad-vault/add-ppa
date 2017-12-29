@@ -16,6 +16,7 @@ This is a modified version to accommodate for various version of ubuntu and it's
 # Using curl
 curl -o add-ppa https://github.com/zackad/add-ppa/raw/master/add-ppa.sh
 
+# Using wget
 wget -O add-ppa https://github.com/zackad/add-ppa/raw/master/add-ppa.sh
 ```
 
