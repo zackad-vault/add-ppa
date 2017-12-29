@@ -1,6 +1,6 @@
 # Add-PPA
 
-Shell (bash) script as replacement for `add-apt-repository` to add PPA (Personal Package Archive) into source repository.
+Shell (bash) script as replacement for `add-apt-repository` to add PPA (Personal Package Archive) repository into source list.
 
 ## Disclaimer
 
