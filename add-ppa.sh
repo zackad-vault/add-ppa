@@ -19,7 +19,7 @@ then
 		if grep -q "deb .*$ppa_name" /etc/apt/sources.list /etc/apt/sources.list.d/*;
 		then
 			echo "canceling, ppa already exists";
-			exit 0;
+			exit 1;
 		fi
 
 		# check if curl available
