@@ -48,7 +48,7 @@ then
 
 		apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $key
 
-		if [ $exit_status != 0 ]; then
+		if [ $? != 0 ]; then
 			# cancel adding sources list if failed
 			rm /etc/apt/sources.list.d/"$list_name.list"
 			exit 1;
