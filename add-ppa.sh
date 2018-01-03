@@ -22,6 +22,11 @@ then
 		# check if curl available
 		if [ -x "$(command -v curl)" ]; then
 			echo "curl is available"
+			key=`curl https://launchpad.net/~$ppa_user/+archive/ubuntu/$ppa_package 2>/dev/null \
+				| grep "<code>.*</code>" \
+				| sed 's/\s//g; s/code//g; s/<>//g; s/<\/>//g' \
+				| cut -d"/" -f2`
+			echo $key
 		else
 			echo "curl is not available"
 		fi
