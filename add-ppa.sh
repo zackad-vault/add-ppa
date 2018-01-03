@@ -54,7 +54,7 @@ then
 			exit 1;
 		else
 			echo "deb http://ppa.launchpad.net/$ppa_name/ubuntu $CODENAME main" > /etc/apt/sources.list.d/"$list_name.list"
-			echo "berhasil"
+			echo "success"
 		fi
 
 		rm -rf /tmp/${NAME}_apt_add_key.txt
