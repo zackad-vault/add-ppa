@@ -21,6 +21,7 @@ then
 			echo "canceling, ppa already exists";
 			exit 0;
 		fi
+
 		# check if curl available
 		if [ -x "$(command -v curl)" ]; then
 			echo "curl is available"
@@ -31,17 +32,34 @@ then
 			echo $key
 		else
 			echo "curl is not available"
+			echo "deb http://ppa.launchpad.net/$ppa_name/ubuntu $CODENAME main" > /etc/apt/sources.list.d/"$list_name.list"
+			echo "updating repository list ..."
+			apt-get update >> /dev/null 2> /tmp/${NAME}_apt_add_key.txt
+			echo "adding gpg key"
+			key=`cat /tmp/${NAME}_apt_add_key.txt | cut -d":" -f6 | cut -d" " -f3`
+			echo $key
 		fi
-		# cancel adding sources list if failed
-		echo "deb http://ppa.launchpad.net/$ppa_name/ubuntu $CODENAME main" >> /etc/apt/sources.list.d/"$list_name.list"
-		echo "updating repository list ..."
-		apt-get update >> /dev/null 2> /tmp/${NAME}_apt_add_key.txt
-		echo "adding gpg key"
-		key=`cat /tmp/${NAME}_apt_add_key.txt | cut -d":" -f6 | cut -d" " -f3`
+
+		if [ "$key" = "" ]; then
+			echo "$key is invalid key ID"
+			rm /etc/apt/sources.list.d/"$list_name.list"
+			exit 1;
+		fi
+
 		apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $key
+
+		if [ $exit_status != 0 ]; then
+			# cancel adding sources list if failed
+			rm /etc/apt/sources.list.d/"$list_name.list"
+			exit 1;
+		else
+			echo "deb http://ppa.launchpad.net/$ppa_name/ubuntu $CODENAME main" > /etc/apt/sources.list.d/"$list_name.list"
+			echo "berhasil"
+		fi
+
 		rm -rf /tmp/${NAME}_apt_add_key.txt
-		echo "updating repository list ..."
-		apt-get update
+		echo "ppa:$ppa_name is added to repository"
+		echo "please update your package list with 'apt-get update'"
 		echo "done"
 	fi
 else
