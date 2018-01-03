@@ -6,6 +6,8 @@ CODENAME=`lsb_release -c | sed 's/\s//g' | cut -d":" -f2 \
 	| sed 's/wheezy/precise/g; s/jessie/trusty/g; s/stretch/xenial/g'`
 then
 	ppa_name=`echo "$1" | cut -d":" -f2 -s`
+	ppa_user=`echo "$ppa_name" | cut -d"/" -f1`
+	ppa_package=`echo "$ppa_name" | cut -d"/" -f2`
 	list_name=`echo $ppa_name | sed 's/\//-/g'`
 	if [ -z "$ppa_name" ]
 	then
