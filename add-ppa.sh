@@ -19,6 +19,13 @@ then
 			echo "canceling, ppa already exists";
 			exit 0;
 		fi
+		# check if curl available
+		if [ -x "$(command -v curl)" ]; then
+			echo "curl is available"
+		else
+			echo "curl is not available"
+		fi
+		# cancel adding sources list if failed
 		echo "deb http://ppa.launchpad.net/$ppa_name/ubuntu $CODENAME main" >> /etc/apt/sources.list.d/"$list_name.list"
 		echo "updating repository list ..."
 		apt-get update >> /dev/null 2> /tmp/${NAME}_apt_add_key.txt
